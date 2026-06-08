@@ -1,5 +1,7 @@
-# Java / Maven
+# Maven
 target/
+
+# Java
 *.class
 
 # Eclipse
