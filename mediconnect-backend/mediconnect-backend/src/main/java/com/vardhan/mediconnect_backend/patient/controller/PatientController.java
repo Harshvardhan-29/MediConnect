@@ -4,6 +4,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import com.vardhan.mediconnect_backend.patient.dto.CreatePatientRequest;
+import com.vardhan.mediconnect_backend.patient.dto.PatientProfileResponse;
 import com.vardhan.mediconnect_backend.patient.dto.PatientResponse;
 import com.vardhan.mediconnect_backend.patient.dto.UpdatePatientRequest;
 import com.vardhan.mediconnect_backend.patient.service.PatientService;
@@ -56,5 +57,15 @@ public class PatientController {
 
         return ResponseEntity.ok(
                 "Patient deleted successfully");
+    }
+    
+    @GetMapping("/profile/{userId}")
+    public ResponseEntity<PatientProfileResponse>
+    getPatientProfile(
+            @PathVariable Long userId) {
+
+        return ResponseEntity.ok(
+                patientService.getPatientProfile(
+                        userId));
     }
 }

@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import com.vardhan.mediconnect_backend.auth.entity.User;
 import com.vardhan.mediconnect_backend.auth.repository.UserRepository;
 import com.vardhan.mediconnect_backend.patient.dto.CreatePatientRequest;
+import com.vardhan.mediconnect_backend.patient.dto.PatientProfileResponse;
 import com.vardhan.mediconnect_backend.patient.dto.PatientResponse;
 import com.vardhan.mediconnect_backend.patient.dto.UpdatePatientRequest;
 import com.vardhan.mediconnect_backend.patient.entity.Patient;
@@ -88,5 +89,20 @@ public class PatientServiceImpl implements PatientService {
     	Patient patient=patientRepository.findById(id).orElseThrow();
     
     	patientRepository.delete(patient);
+    }
+    
+    @Override
+    public PatientProfileResponse getPatientProfile(Long userId) {
+    	User user =userRepository.findById(userId).orElseThrow();
+    	
+    	Patient patient=patientRepository.findByUser(user).orElseThrow();
+    	
+    	return new PatientProfileResponse(
+    			patient.getId(),
+    			user.getName(), 
+    			user.getEmail(),
+    			patient.getPhoneNumber(),
+                patient.getAge(),
+                patient.getGender());
     }
 }

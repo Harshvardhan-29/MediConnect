@@ -1,7 +1,10 @@
 package com.vardhan.mediconnect_backend.auth.security;
 
 import java.io.IOException;
+import java.util.Collections;
 
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
@@ -39,12 +42,17 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         String token = authHeader.substring(7);
 
         try {
-            String email =
-                    jwtService.extractUsername(token);
+        	String email =
+        	        jwtService.extractUsername(token);
 
-            System.out.println("Authenticated User: "
-                    + email);
+        	UsernamePasswordAuthenticationToken authToken =
+        	        new UsernamePasswordAuthenticationToken(
+        	                email,
+        	                null,
+        	                Collections.emptyList());
 
+        	SecurityContextHolder.getContext()
+        	        .setAuthentication(authToken);
         } catch (Exception e) {
 
             response.setStatus(

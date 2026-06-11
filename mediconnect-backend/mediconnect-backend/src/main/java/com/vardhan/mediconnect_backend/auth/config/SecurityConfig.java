@@ -35,8 +35,8 @@ public class SecurityConfig {
             .authorizeHttpRequests(auth -> auth
             		.requestMatchers(
             		        "/api/auth/register",
-            		        "/api/auth/login",
-            		        "/api/patients/**")
+            		        "/api/auth/login"
+            		       )
             		.permitAll()                    .anyRequest().authenticated())
             .sessionManagement(session ->
             session.sessionCreationPolicy(
