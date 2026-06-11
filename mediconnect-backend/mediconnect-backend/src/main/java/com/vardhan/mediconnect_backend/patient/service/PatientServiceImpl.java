@@ -6,6 +6,7 @@ import com.vardhan.mediconnect_backend.auth.entity.User;
 import com.vardhan.mediconnect_backend.auth.repository.UserRepository;
 import com.vardhan.mediconnect_backend.patient.dto.CreatePatientRequest;
 import com.vardhan.mediconnect_backend.patient.dto.PatientResponse;
+import com.vardhan.mediconnect_backend.patient.dto.UpdatePatientRequest;
 import com.vardhan.mediconnect_backend.patient.entity.Patient;
 import com.vardhan.mediconnect_backend.patient.repository.PatientRepository;
 
@@ -57,5 +58,35 @@ public class PatientServiceImpl implements PatientService {
     		patient.getPhoneNumber(),
     		patient.getAge(),
     		patient.getGender());
+    }
+    
+    @Override
+    public PatientResponse updatePatient(Long id,UpdatePatientRequest request) {
+    	
+    	Patient patient=patientRepository.findById(id).orElseThrow();
+    	 patient.setPhoneNumber(
+    	            request.getPhoneNumber());
+
+    	    patient.setAge(
+    	            request.getAge());
+
+    	    patient.setGender(
+    	            request.getGender());
+
+    	    Patient updatedPatient =
+    	            patientRepository.save(patient);
+    	   
+    	    return new PatientResponse(
+    	            updatedPatient.getId(),
+    	            updatedPatient.getPhoneNumber(),
+    	            updatedPatient.getAge(),
+    	            updatedPatient.getGender());
+    }
+    
+    @Override
+    public void deletePatient(Long id) {
+    	Patient patient=patientRepository.findById(id).orElseThrow();
+    
+    	patientRepository.delete(patient);
     }
 }

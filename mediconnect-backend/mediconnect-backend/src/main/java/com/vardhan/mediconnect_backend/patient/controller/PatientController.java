@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.*;
 
 import com.vardhan.mediconnect_backend.patient.dto.CreatePatientRequest;
 import com.vardhan.mediconnect_backend.patient.dto.PatientResponse;
+import com.vardhan.mediconnect_backend.patient.dto.UpdatePatientRequest;
 import com.vardhan.mediconnect_backend.patient.service.PatientService;
 
 @RestController
@@ -35,5 +36,25 @@ public class PatientController {
 
         return ResponseEntity.ok(
                 patientService.getPatient(id));
+    }
+    
+    @PutMapping("/{id}")
+    public ResponseEntity<PatientResponse> updatePatient(
+            @PathVariable Long id,
+            @RequestBody UpdatePatientRequest request) {
+
+        return ResponseEntity.ok(
+                patientService.updatePatient(
+                        id,
+                        request));
+    }
+    
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> deletePatient(
+    		@PathVariable Long id){
+    	patientService.deletePatient(id);
+
+        return ResponseEntity.ok(
+                "Patient deleted successfully");
     }
 }
