@@ -45,11 +45,15 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         	String email =
         	        jwtService.extractUsername(token);
 
+        	String role = jwtService.extractRole(token);
+
         	UsernamePasswordAuthenticationToken authToken =
         	        new UsernamePasswordAuthenticationToken(
         	                email,
         	                null,
-        	                Collections.emptyList());
+        	                java.util.List.of(
+        	                        new org.springframework.security.core.authority.SimpleGrantedAuthority(
+        	                                "ROLE_" + role)));
 
         	SecurityContextHolder.getContext()
         	        .setAuthentication(authToken);

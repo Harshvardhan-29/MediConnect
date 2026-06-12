@@ -35,9 +35,11 @@ public class SecurityConfig {
             .authorizeHttpRequests(auth -> auth
             		.requestMatchers(
             		        "/api/auth/register",
-            		        "/api/auth/login"
+            		        "/api/auth/login",
+            		        "/api/doctors/**"
             		       )
-            		.permitAll()                    .anyRequest().authenticated())
+            		.permitAll() .requestMatchers("/api/patients/**")
+            		.hasRole("PATIENT").anyRequest().authenticated())
             .sessionManagement(session ->
             session.sessionCreationPolicy(
                     SessionCreationPolicy.STATELESS))

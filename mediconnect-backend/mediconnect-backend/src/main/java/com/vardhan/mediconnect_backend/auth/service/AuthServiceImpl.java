@@ -65,7 +65,8 @@ public class AuthServiceImpl implements AuthService {
 			return new LoginResponse("Invalid password", null);
 		}
 
-		String token = jwtService.generateToken(user.getEmail());
+		String token = jwtService.generateToken(user.getEmail(),
+												user.getRole().name());
 
 		return new LoginResponse("Login successful", token);	}
 }

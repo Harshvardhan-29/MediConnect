@@ -23,12 +23,13 @@ public class JwtService {
     @Value("${jwt.expiration}")
     private long jwtExpiration;
 
-    public String generateToken(String email) {
+    public String generateToken(String email, String role) {
 
         Key key = Keys.hmacShaKeyFor(secretKey.getBytes());
 
         return Jwts.builder()
                 .subject(email)
+                .claim("role",role)
                 .issuedAt(new Date())
                 .expiration(new Date(System.currentTimeMillis() + jwtExpiration))
                 .signWith(key)
@@ -62,5 +63,10 @@ public class JwtService {
         final String username = extractUsername(token);
 
         return username.equals(email);
+    }
+    
+    public String extractRole(String token) {
+        return extractAllClaims(token)
+                .get("role", String.class);
     }
 }
